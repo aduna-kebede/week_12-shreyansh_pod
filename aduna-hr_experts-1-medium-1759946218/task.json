@@ -7,7 +7,7 @@
   "temperature": 1,
   "task": {
     "user_id": "8",
-    "instruction": "You are Maria Rodriguez (maria.rodriguez@company.com), an HR Manager. You need to process a leave request from employee Jennifer Chen (jennifer.chen@company.com) for 2 weeks of annual leave starting December 15, 2025. Verify her remaining leave balance, approve the request, and ensure proper documentation is maintained.",
+    "instruction": "You are Maria Rodriguez (maria.rodriguez@company.com), an HR Manager. You need to process a leave request from employee Crystal Mcclure (crystal.mcclure@company.com) for annual leave starting October 26, 2024. Verify her remaining leave balance, approve the request, and ensure proper documentation is maintained.",
     "actions": [
       {
         "name": "discover_user_employee_entities",
@@ -16,18 +16,18 @@
       },
       {
         "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "users", "filters": { "email": "jennifer.chen@company.com" } },
-        "output": { "success": true, "entity_type": "users", "count": 1, "results": [ { "user_id": "45", "first_name": "Jennifer", "last_name": "Chen", "email": "jennifer.chen@company.com", "role": "employee", "status": "active" } ] }
+        "arguments": { "entity_type": "users", "filters": { "email": "crystal.mcclure@company.com" } },
+        "output": { "success": true, "entity_type": "users", "count": 1, "results": [ { "user_id": "67", "first_name": "Crystal", "last_name": "Mcclure", "email": "crystal.mcclure@company.com", "role": "employee", "status": "active" } ] }
       },
       {
         "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "employees", "filters": { "user_id": "45" } },
-        "output": { "success": true, "entity_type": "employees", "count": 1, "results": [ { "employee_id": "25", "user_id": "45", "employment_status": "active", "hire_date": "2023-03-15" } ] }
+        "arguments": { "entity_type": "employees", "filters": { "user_id": "67" } },
+        "output": { "success": true, "entity_type": "employees", "count": 1, "results": [ { "employee_id": "21", "user_id": "67", "employment_status": "active", "hire_date": "2024-10-16" } ] }
       },
       {
         "name": "discover_leave_entities",
-        "arguments": { "entity_type": "leave_requests", "filters": { "employee_id": "25", "status": "pending" } },
-        "output": { "success": true, "entity_type": "leave_requests", "count": 1, "results": [ { "leave_id": "LR-2025-089", "employee_id": "25", "leave_type": "annual", "start_date": "2025-12-15", "end_date": "2025-12-26", "days_requested": 10.0, "status": "pending" } ] }
+        "arguments": { "entity_type": "leave_requests", "filters": { "employee_id": "21", "status": "pending" } },
+        "output": { "success": true, "entity_type": "leave_requests", "count": 1, "results": [ { "leave_id": "95", "employee_id": "21", "leave_type": "annual", "start_date": "2024-10-26", "end_date": "2024-11-05", "days_requested": 10.0, "status": "pending" } ] }
       },
       {
         "name": "check_approval",
@@ -36,13 +36,13 @@
       },
       {
         "name": "manage_leave_requests",
-        "arguments": { "action": "update", "leave_id": "LR-2025-089", "status": "approved", "approved_by": "8", "approval_date": "2025-10-09T01:01:00" },
-        "output": { "success": true, "leave_id": "LR-2025-089", "status": "approved", "remaining_balance": 15.0 }
+        "arguments": { "action": "update", "leave_id": "95", "status": "approved", "approved_by": "8", "approval_date": "2025-10-09T01:01:00" },
+        "output": { "success": true, "leave_id": "95", "status": "approved", "remaining_balance": 15.0 }
       },
       {
         "name": "manage_audit_logs",
-        "arguments": { "operation": "create", "user_id": "8", "action": "update", "reference_type": "leave_requests", "reference_id": "LR-2025-089", "field_name": "status", "old_value": "pending", "new_value": "approved" },
-        "output": { "success": true, "log_id": "AUDIT-2025-445", "reference_id": "LR-2025-089", "timestamp": "2025-10-09T01:01:30", "user_id": "8" }
+        "arguments": { "operation": "create", "user_id": "8", "action": "update", "reference_type": "leave_requests", "reference_id": "95", "field_name": "status", "old_value": "pending", "new_value": "approved" },
+        "output": { "success": true, "log_id": "AUDIT-2025-445", "reference_id": "95", "timestamp": "2025-10-09T01:01:30", "user_id": "8" }
       }
     ],
     "edges": [
