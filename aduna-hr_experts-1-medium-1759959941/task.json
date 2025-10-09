@@ -7,7 +7,7 @@
   "temperature": 1,
   "task": {
     "user_id": "12",
-    "instruction": "You are Robert Kim (robert.kim@company.com), an HR Manager. You need to conduct a quarterly performance review for employee Michael Torres (michael.torres@company.com) for Q3 2025. Complete the review with ratings, document the feedback, and ensure proper approvals are obtained.",
+    "instruction": "You are Robert Kim (robert.kim@company.com), an HR manager. You need to conduct a quarterly performance review for employee Michael Torres (michael.torres@company.com) for Q3 2025, covering the period from July 1, 2025, to September 30, 2025. Complete the review with an overall rating of 'meets_expectations,' a goals_achievement_score of 7.5, a communication_score of 8.0, a teamwork_score of 7.8, and a technical_skills_score of 8.2. Document the feedback as 'Michael has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter.' Ensure proper approvals are obtained.",
     "actions": [
       {
         "name": "discover_user_employee_entities",
@@ -36,13 +36,13 @@
       },
       {
         "name": "manage_performance_review",
-        "arguments": { "action": "update", "review_id": "PR-2025-Q3-042", "overall_rating": "meets_expectations", "goals_achievement_score": 7.5, "communication_score": 8.0, "teamwork_score": 7.8, "technical_skills_score": 8.2, "status": "submitted" },
-        "output": { "success": true, "review_id": "PR-2025-Q3-042", "status": "submitted", "overall_rating": "meets_expectations" }
+        "arguments": { "action": "update", "review_id": "PR-2025-Q3-042", "overall_rating": "meets_expectations", "goals_achievement_score": 7.5, "communication_score": 8.0, "teamwork_score": 7.8, "technical_skills_score": 8.2, "status": "submitted", "feedback_comments": "Michael has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter." },
+        "output": { "success": true, "review_id": "PR-2025-Q3-042", "status": "submitted", "overall_rating": "meets_expectations", "feedback_comments": "Michael has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter." }
       },
       {
         "name": "manage_audit_logs",
         "arguments": { "operation": "create", "user_id": "12", "action": "update", "reference_type": "performance_reviews", "reference_id": "PR-2025-Q3-042", "field_name": "status", "old_value": "draft", "new_value": "submitted" },
-        "output": { "success": true, "log_id": "AUDIT-2025-567", "reference_id": "PR-2025-Q3-042", "timestamp": "2025-10-09T14:30:15", "user_id": "12" }
+        "output": { "success": true, "log_id": "AUDIT-2025-567", "reference_id": "PR-2025-Q3-042", "timestamp": "2025-10-09T07:54:00", "user_id": "12" }
       }
     ],
     "edges": [
