@@ -2,96 +2,259 @@
   "env": "hr_experts",
   "model_provider": "fireworks",
   "model": "qwen3-coder-480b-a35b-instruct",
-  "interface_num": 1,
   "num_trials": 3,
   "temperature": 1,
+  "interface_num": 1,
   "task": {
-    "user_id": "8",
-    "instruction": "You are Maria Rodriguez (maria.rodriguez@company.com), an HR Manager. You need to process a leave request from employee Crystal Mcclure (crystal.mcclure@company.com) for annual leave starting October 26, 2024. Verify her remaining leave balance, approve the request, and ensure proper documentation is maintained.",
+    "user_id": "6",
+    "instruction": "You are Tina Hale (tina86@yahoo.com), an HR Manager. Process a vacation leave request for Sarah Johnson (sarah.johnson@company.com) from 2025-12-15 to 2025-12-22. The request should be approved with 6 requested days and 14 remaining balance.",
     "actions": [
       {
         "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "users", "filters": { "email": "maria.rodriguez@company.com" } },
-        "output": { "success": true, "entity_type": "users", "count": 1, "results": [ { "user_id": "8", "first_name": "Maria", "last_name": "Rodriguez", "email": "maria.rodriguez@company.com", "role": "hr_manager", "status": "active" } ] }
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "tina86@yahoo.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-08-21T15:10:45",
+              "email": "tina86@yahoo.com",
+              "first_name": "Tina",
+              "last_name": "Hale",
+              "mfa_enabled": true,
+              "phone_number": "+19386024033",
+              "role": "hr_manager",
+              "status": "active",
+              "updated_at": "2024-10-19T22:44:53",
+              "user_id": "6"
+            }
+          ],
+          "success": true
+        }
       },
       {
         "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "users", "filters": { "email": "crystal.mcclure@company.com" } },
-        "output": { "success": true, "entity_type": "users", "count": 1, "results": [ { "user_id": "67", "first_name": "Crystal", "last_name": "Mcclure", "email": "crystal.mcclure@company.com", "role": "employee", "status": "active" } ] }
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "sarah.johnson@company.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2023-02-10T08:15:00",
+              "email": "sarah.johnson@company.com",
+              "first_name": "Sarah",
+              "last_name": "Johnson",
+              "mfa_enabled": true,
+              "phone_number": "+15551234569",
+              "role": "employee",
+              "status": "active",
+              "updated_at": "2024-08-20T14:45:00",
+              "user_id": "17"
+            }
+          ],
+          "success": true
+        }
       },
       {
         "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "employees", "filters": { "user_id": "67" } },
-        "output": { "success": true, "entity_type": "employees", "count": 1, "results": [ { "employee_id": "21", "user_id": "67", "employment_status": "active", "hire_date": "2024-10-16" } ] }
-      },
-      {
-        "name": "discover_leave_entities",
-        "arguments": { "entity_type": "leave_requests", "filters": { "employee_id": "21", "status": "pending" } },
-        "output": { "success": true, "entity_type": "leave_requests", "count": 1, "results": [ { "leave_id": "95", "employee_id": "21", "leave_type": "annual", "start_date": "2024-10-26", "end_date": "2024-11-05", "days_requested": 10.0, "status": "pending" } ] }
+        "arguments": {
+          "entity_type": "employees",
+          "filters": {
+            "user_id": "17"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "employees",
+          "results": [
+            {
+              "address": "456 Innovation Ave, San Francisco, CA 94105",
+              "created_at": "2023-02-10T08:15:00",
+              "date_of_birth": "1988-08-22",
+              "employee_id": "4",
+              "employment_status": "active",
+              "hire_date": "2023-02-10",
+              "hourly_rate": 55,
+              "manager_id": "22",
+              "position_id": "26",
+              "updated_at": "2024-08-20T14:45:00",
+              "user_id": "17"
+            }
+          ],
+          "success": true
+        }
       },
       {
         "name": "check_approval",
-        "arguments": { "action_type": "Leave Request Processing", "requested_by_user_id": "8", "required_roles": ["hr_manager"] },
-        "output": { "success": true, "approval_id": "APP-2025-156" }
+        "arguments": {
+          "action": "approve_leave_request",
+          "requester_email": "tina86@yahoo.com"
+        },
+        "output": {
+          "approved": true,
+          "approval_id": "APP-2025-003",
+          "approver": "hr_manager",
+          "message": "Leave request approval authorized"
+        }
       },
       {
         "name": "manage_leave_requests",
-        "arguments": { "action": "update", "leave_id": "95", "status": "approved", "approved_by": "8", "approval_date": "2025-10-09T01:01:00" },
-        "output": { "success": true, "leave_id": "95", "status": "approved", "remaining_balance": 15.0 }
+        "arguments": {
+          "action": "create",
+          "leave_data": {
+            "employee_id": "4",
+            "leave_type": "vacation",
+            "start_date": "2025-12-15",
+            "end_date": "2025-12-22",
+            "status": "approved",
+            "approved_by": "6",
+            "requested_days": 6,
+            "remaining_balance": 14.0
+          }
+        },
+        "output": {
+          "action": "create",
+          "message": "Leave request 201 created successfully",
+          "leave_data": {
+            "employee_id": "4",
+            "end_date": "2025-12-22",
+            "leave_id": "201",
+            "leave_type": "vacation",
+            "remaining_balance": 14.0,
+            "requested_days": 6,
+            "start_date": "2025-12-15",
+            "status": "approved",
+            "approved_by": "6",
+            "created_at": "2025-10-01T12:00:00",
+            "updated_at": "2025-10-01T12:00:00"
+          },
+          "leave_id": "201",
+          "success": true
+        }
       },
       {
         "name": "manage_audit_logs",
-        "arguments": { "operation": "create", "user_id": "8", "action": "update", "reference_type": "leave_requests", "reference_id": "95", "field_name": "status", "old_value": "pending", "new_value": "approved" },
-        "output": { "success": true, "log_id": "AUDIT-2025-445", "reference_id": "95", "timestamp": "2025-10-09T01:01:30", "user_id": "8" }
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "leave_requests",
+          "reference_id": "201",
+          "user_id": "6"
+        },
+        "output": {
+          "action": "create",
+          "log_id": "1247",
+          "reference_id": "201",
+          "reference_type": "leave_requests",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "6"
+        }
       }
     ],
     "edges": [
       {
         "from": "instruction",
         "to": "discover_user_employee_entities",
-        "connection": { "output": "entity_type, email", "input": "entity_type, filters.email" }
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
       },
       {
         "from": "instruction",
         "to": "discover_user_employee_entities",
-        "connection": { "output": "entity_type, email", "input": "entity_type, filters.email" }
+        "connection": {
+          "output": "entity_type, employee_email",
+          "input": "entity_type, filters.email"
+        }
       },
       {
         "from": "discover_user_employee_entities",
         "to": "discover_user_employee_entities",
-        "connection": { "output": "results[0].user_id", "input": "filters.user_id" }
-      },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "discover_leave_entities",
-        "connection": { "output": "results[0].employee_id", "input": "filters.employee_id" }
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "filters.user_id"
+        }
       },
       {
         "from": "discover_user_employee_entities",
         "to": "check_approval",
-        "connection": { "output": "results[0].user_id", "input": "requested_by_user_id" }
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
       },
       {
-        "from": "discover_leave_entities",
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
         "to": "manage_leave_requests",
-        "connection": { "output": "results[0].leave_id", "input": "leave_id" }
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "leave_data.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_leave_requests",
+        "connection": {
+          "output": "action, leave_type, start_date, end_date, status, requested_days, remaining_balance",
+          "input": "action, leave_data.leave_type, leave_data.start_date, leave_data.end_date, leave_data.status, leave_data.requested_days, leave_data.remaining_balance"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_leave_requests",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "leave_data.approved_by"
+        }
       },
       {
         "from": "manage_leave_requests",
         "to": "manage_audit_logs",
-        "connection": { "output": "leave_id, status", "input": "reference_id, new_value" }
+        "connection": {
+          "output": "leave_id",
+          "input": "reference_id"
+        }
       },
       {
-        "from": "discover_leave_entities",
+        "from": "discover_user_employee_entities",
         "to": "manage_audit_logs",
-        "connection": { "output": "results[0].status", "input": "old_value" }
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type",
+          "input": "action, operation, reference_type"
+        }
       }
     ],
     "outputs": [
-      "manage_leave_requests.leave_id",
-      "manage_leave_requests.status",
-      "manage_leave_requests.remaining_balance"
+
+        
     ],
-    "num_edges": 8
+    "num_edges": 11
   }
 }
