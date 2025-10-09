@@ -6,92 +6,260 @@
   "num_trials": 3,
   "temperature": 1,
   "task": {
-    "user_id": "12",
-    "instruction": "You are Robert Kim (robert.kim@company.com), an HR manager. You need to conduct a quarterly performance review for employee Michael Torres (michael.torres@company.com) for Q3 2025, covering the period from July 1, 2025, to September 30, 2025. Complete the review with an overall rating of 'meets_expectations,' a goals_achievement_score of 7.5, a communication_score of 8.0, a teamwork_score of 7.8, and a technical_skills_score of 8.2. Document the feedback as 'Michael has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter.' Ensure proper approvals are obtained.",
+    "user_id": "6",
+    "instruction": "You are Tina Hale (tina86@yahoo.com), an HR manager authorized to conduct performance reviews. You need to update the quarterly performance review for employee Randy Williams (williams441@outlook.com) for the period from September 12, 2024, to December 11, 2024, using review ID '1'. Confirm the review with an overall rating of 'meets_expectations', a goals_achievement_score of 7.5, a communication_score of 8.0, a teamwork_score of 7.8, a technical_skills_score of 8.2, and a leadership_score of 7.9. Document the feedback as 'Randy has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter.'",
     "actions": [
-      {
-        "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "users", "filters": { "email": "robert.kim@company.com" } },
-        "output": { "success": true, "entity_type": "users", "count": 1, "results": [ { "user_id": "12", "first_name": "Robert", "last_name": "Kim", "email": "robert.kim@company.com", "role": "hr_manager", "status": "active" } ] }
+    {
+      "name": "discover_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "tina86@yahoo.com"
+        }
       },
-      {
-        "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "users", "filters": { "email": "michael.torres@company.com" } },
-        "output": { "success": true, "entity_type": "users", "count": 1, "results": [ { "user_id": "67", "first_name": "Michael", "last_name": "Torres", "email": "michael.torres@company.com", "role": "employee", "status": "active" } ] }
-      },
-      {
-        "name": "discover_user_employee_entities",
-        "arguments": { "entity_type": "employees", "filters": { "user_id": "67" } },
-        "output": { "success": true, "entity_type": "employees", "count": 1, "results": [ { "employee_id": "42", "user_id": "67", "employment_status": "active", "hire_date": "2022-08-10" } ] }
-      },
-      {
-        "name": "discover_performance_entities",
-        "arguments": { "entity_type": "performance_reviews", "filters": { "employee_id": "42", "review_type": "quarterly" } },
-        "output": { "success": true, "entity_type": "performance_reviews", "count": 1, "results": [ { "review_id": "PR-2025-Q3-042", "employee_id": "42", "reviewer_id": "12", "review_period_start": "2025-07-01", "review_period_end": "2025-09-30", "review_type": "quarterly", "status": "draft" } ] }
-      },
-      {
-        "name": "check_approval",
-        "arguments": { "action_type": "Performance Review Completion", "requested_by_user_id": "12", "required_roles": ["hr_manager"] },
-        "output": { "success": true, "approval_id": "APP-2025-203" }
-      },
-      {
-        "name": "manage_performance_review",
-        "arguments": { "action": "update", "review_id": "PR-2025-Q3-042", "overall_rating": "meets_expectations", "goals_achievement_score": 7.5, "communication_score": 8.0, "teamwork_score": 7.8, "technical_skills_score": 8.2, "status": "submitted", "feedback_comments": "Michael has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter." },
-        "output": { "success": true, "review_id": "PR-2025-Q3-042", "status": "submitted", "overall_rating": "meets_expectations", "feedback_comments": "Michael has shown consistent performance with strong technical skills and good teamwork. Focus on improving goal-setting for the next quarter." }
-      },
-      {
-        "name": "manage_audit_logs",
-        "arguments": { "operation": "create", "user_id": "12", "action": "update", "reference_type": "performance_reviews", "reference_id": "PR-2025-Q3-042", "field_name": "status", "old_value": "draft", "new_value": "submitted" },
-        "output": { "success": true, "log_id": "AUDIT-2025-567", "reference_id": "PR-2025-Q3-042", "timestamp": "2025-10-09T07:54:00", "user_id": "12" }
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2024-08-21T15:10:45",
+            "email": "tina86@yahoo.com",
+            "first_name": "Tina",
+            "last_name": "Hale",
+            "mfa_enabled": true,
+            "phone_number": "+19386024033",
+            "role": "hr_manager",
+            "status": "active",
+            "updated_at": "2024-10-19T22:44:53",
+            "user_id": "6"
+          }
+        ],
+        "success": true
       }
-    ],
+    },
+    {
+      "name": "discover_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "williams441@outlook.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2023-11-26T13:14:25",
+            "email": "williams441@outlook.com",
+            "first_name": "Randy",
+            "last_name": "Williams",
+            "mfa_enabled": true,
+            "phone_number": "+17182418518",
+            "role": "employee",
+            "status": "active",
+            "updated_at": "2024-10-15T19:08:29",
+            "user_id": "48"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "discover_user_employee_entities",
+      "arguments": {
+        "entity_type": "employees",
+        "filters": {
+          "user_id": "48"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "employees",
+        "results": [
+          {
+            "address": "61354 Julia Mountains Suite 646, Lake Robert, WV 21052",
+            "created_at": "2024-10-31T15:35:19",
+            "date_of_birth": "1988-11-27",
+            "employee_id": "2",
+            "employment_status": "active",
+            "hire_date": "2024-09-12",
+            "hourly_rate": 16,
+            "manager_id": "62",
+            "position_id": "305",
+            "updated_at": "2025-07-04T03:04:08",
+            "user_id": "48"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "discover_performance_entities",
+      "arguments": {
+        "entity_type": "performance_reviews",
+        "filters": {
+          "employee_id": "2",
+          "review_type": "quarterly"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "performance_reviews",
+        "results": [
+          {
+            "communication_score": 8,
+            "created_at": "2024-12-12T18:50:39",
+            "employee_id": "2",
+            "goals_achievement_score": 7.5,
+            "leadership_score": 7.9,
+            "overall_rating": "meets_expectations",
+            "review_id": "1",
+            "review_period_end": "2024-12-11",
+            "review_period_start": "2024-09-12",
+            "review_type": "quarterly",
+            "reviewer_id": "6",
+            "status": "approved",
+            "teamwork_score": 7.8,
+            "technical_skills_score": 8.2,
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "check_approval",
+      "arguments": {
+        "action": "performance_review_final_approval",
+        "requester_email": "tina86@yahoo.com"
+      },
+      "output": {
+        "approval_valid": true,
+        "message": "Role 'hr_manager' is directly authorized for action 'performance_review_final_approval'"
+      }
+    },
+    {
+      "name": "manage_performance_review",
+      "arguments": {
+        "action": "update",
+        "review_id": "1"
+      },
+      "output": {
+        "action": "update",
+        "message": "Performance review 1 updated successfully",
+        "review_data": {
+          "communication_score": 8,
+          "created_at": "2024-12-12T18:50:39",
+          "employee_id": "2",
+          "goals_achievement_score": 7.5,
+          "leadership_score": 7.9,
+          "overall_rating": "meets_expectations",
+          "review_id": "1",
+          "review_period_end": "2024-12-11",
+          "review_period_start": "2024-09-12",
+          "review_type": "quarterly",
+          "reviewer_id": "6",
+          "status": "approved",
+          "teamwork_score": 7.8,
+          "technical_skills_score": 8.2,
+          "updated_at": "2025-10-01T12:00:00"
+        },
+        "review_id": "1",
+        "success": true
+      }
+    },
+    {
+      "name": "manage_audit_logs",
+      "arguments": {
+        "action": "update",
+        "field_name": "status",
+        "new_value": "approved",
+        "old_value": "draft",
+        "operation": "create",
+        "reference_id": "1",
+        "reference_type": "performance_reviews",
+        "user_id": "6"
+      },
+      "output": {
+        "action": "update",
+        "field_name": "status",
+        "log_id": "2886",
+        "new_value": "approved",
+        "old_value": "draft",
+        "reference_id": "1",
+        "reference_type": "performance_reviews",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "6"
+      }
+    }
+  ],
+    
     "edges": [
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": { "output": "entity_type, email", "input": "entity_type, filters.email" }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": { "output": "entity_type, email", "input": "entity_type, filters.email" }
-      },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "discover_user_employee_entities",
-        "connection": { "output": "results[0].user_id", "input": "filters.user_id" }
-      },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "discover_performance_entities",
-        "connection": { "output": "results[0].employee_id", "input": "filters.employee_id" }
-      },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "check_approval",
-        "connection": { "output": "results[0].user_id", "input": "requested_by_user_id" }
-      },
-      {
-        "from": "discover_performance_entities",
-        "to": "manage_performance_review",
-        "connection": { "output": "results[0].review_id", "input": "review_id" }
-      },
-      {
-        "from": "manage_performance_review",
-        "to": "manage_audit_logs",
-        "connection": { "output": "review_id, status", "input": "reference_id, new_value" }
-      },
-      {
-        "from": "discover_performance_entities",
-        "to": "manage_audit_logs",
-        "connection": { "output": "results[0].status", "input": "old_value" }
-      }
-    ],
+  {
+    "from": "discover_user_employee_entities",
+    "to": "check_approval",
+    "connection": {
+      "output": "results[0].email",
+      "input": "requester_email"
+    }
+  },
+  {
+    "from": "discover_user_employee_entities",
+    "to": "discover_user_employee_entities",
+    "connection": {
+      "output": "results[0].user_id",
+      "input": "filters.user_id"
+    }
+  },
+  {
+    "from": "discover_user_employee_entities",
+    "to": "discover_performance_entities",
+    "connection": {
+      "output": "results[0].employee_id",
+      "input": "filters.employee_id"
+    }
+  },
+  {
+    "from": "instruction",
+    "to": "discover_performance_entities",
+    "connection": {
+      "output": "quarterly",
+      "input": "filters.review_type"
+    }
+  },
+  {
+    "from": "discover_performance_entities",
+    "to": "manage_performance_review",
+    "connection": {
+      "output": "results[0].review_id",
+      "input": "review_id"
+    }
+  },
+  {
+    "from": "check_approval",
+    "to": "manage_performance_review",
+    "connection": {
+      "output": "approval_valid",
+      "input": "approval_status"
+    }
+  },
+  {
+    "from": "manage_performance_review",
+    "to": "manage_audit_logs",
+    "connection": {
+      "output": "review_id, review_data.status, results[0].user_id",
+      "input": "reference_id, new_value, user_id"
+    }
+  }
+],
+
     "outputs": [
       "manage_performance_review.review_id",
       "manage_performance_review.status",
       "manage_performance_review.overall_rating"
     ],
-    "num_edges": 8
+
+    "num_edges": 7
   }
 }
