@@ -7,7 +7,7 @@
   "interface_num": 1,
   "task": {
     "user_id": "6",
-    "instruction": "You are Tina Hale (tina86@yahoo.com), an HR Manager. Process a vacation leave request for Sarah Johnson (sarah.johnson@company.com) from 2025-12-15 to 2025-12-22. The request should be approved with 6 requested days and 14 remaining balance.",
+    "instruction": "You are Tina Hale (tina86@yahoo.com), an HR Manager. Onboard new employee David Wilson (david.wilson@company.com) as a Software Engineer. His hire date is 2025-11-01, manager is John Smith (john.smith@company.com), hourly rate is $65, and address is 789 Tech Drive, San Francisco, CA 94105.",
     "actions": [
       {
         "name": "discover_user_employee_entities",
@@ -42,7 +42,7 @@
         "arguments": {
           "entity_type": "users",
           "filters": {
-            "email": "sarah.johnson@company.com"
+            "email": "david.wilson@company.com"
           }
         },
         "output": {
@@ -50,45 +50,45 @@
           "entity_type": "users",
           "results": [
             {
-              "created_at": "2023-02-10T08:15:00",
-              "email": "sarah.johnson@company.com",
-              "first_name": "Sarah",
-              "last_name": "Johnson",
-              "mfa_enabled": true,
-              "phone_number": "+15551234569",
+              "created_at": "2025-10-15T09:00:00",
+              "email": "david.wilson@company.com",
+              "first_name": "David",
+              "last_name": "Wilson",
+              "mfa_enabled": false,
+              "phone_number": "+15551234570",
               "role": "employee",
-              "status": "active",
-              "updated_at": "2024-08-20T14:45:00",
-              "user_id": "17"
+              "status": "inactive",
+              "updated_at": "2025-10-15T09:00:00",
+              "user_id": "18"
             }
           ],
           "success": true
         }
       },
       {
-        "name": "discover_user_employee_entities",
+        "name": "discover_job_entities",
         "arguments": {
-          "entity_type": "employees",
+          "entity_type": "job_positions",
           "filters": {
-            "user_id": "17"
+            "title": "Software Engineer",
+            "status": "open"
           }
         },
         "output": {
           "count": 1,
-          "entity_type": "employees",
+          "entity_type": "job_positions",
           "results": [
             {
-              "address": "456 Innovation Ave, San Francisco, CA 94105",
-              "created_at": "2023-02-10T08:15:00",
-              "date_of_birth": "1988-08-22",
-              "employee_id": "4",
-              "employment_status": "active",
-              "hire_date": "2023-02-10",
-              "hourly_rate": 55,
-              "manager_id": "22",
-              "position_id": "26",
-              "updated_at": "2024-08-20T14:45:00",
-              "user_id": "17"
+              "position_id": "27",
+              "title": "Software Engineer",
+              "department_id": "10",
+              "job_level": "mid",
+              "employment_type": "full_time",
+              "hourly_rate_min": 50,
+              "hourly_rate_max": 80,
+              "status": "open",
+              "created_at": "2023-01-15T09:30:00",
+              "updated_at": "2024-08-20T14:45:00"
             }
           ],
           "success": true
@@ -97,48 +97,48 @@
       {
         "name": "check_approval",
         "arguments": {
-          "action": "approve_leave_request",
+          "action": "employee_onboarding",
           "requester_email": "tina86@yahoo.com"
         },
         "output": {
           "approved": true,
-          "approval_id": "APP-2025-003",
+          "approval_id": "APP-2025-004",
           "approver": "hr_manager",
-          "message": "Leave request approval authorized"
+          "message": "Employee onboarding approval authorized"
         }
       },
       {
-        "name": "manage_leave_requests",
+        "name": "manage_employee",
         "arguments": {
           "action": "create",
-          "leave_data": {
-            "employee_id": "4",
-            "leave_type": "vacation",
-            "start_date": "2025-12-15",
-            "end_date": "2025-12-22",
-            "status": "approved",
-            "approved_by": "6",
-            "requested_days": 6,
-            "remaining_balance": 14.0
+          "employee_data": {
+            "user_id": "18",
+            "position_id": "27",
+            "hire_date": "2025-11-01",
+            "manager_id": "22",
+            "date_of_birth": "1990-06-20",
+            "address": "789 Tech Drive, San Francisco, CA 94105",
+            "hourly_rate": 65,
+            "employment_status": "active"
           }
         },
         "output": {
           "action": "create",
-          "message": "Leave request 201 created successfully",
-          "leave_data": {
-            "employee_id": "4",
-            "end_date": "2025-12-22",
-            "leave_id": "201",
-            "leave_type": "vacation",
-            "remaining_balance": 14.0,
-            "requested_days": 6,
-            "start_date": "2025-12-15",
-            "status": "approved",
-            "approved_by": "6",
+          "message": "Employee 5 created successfully",
+          "employee_data": {
+            "employee_id": "5",
+            "user_id": "18",
+            "position_id": "27",
+            "hire_date": "2025-11-01",
+            "manager_id": "22",
+            "date_of_birth": "1990-06-20",
+            "address": "789 Tech Drive, San Francisco, CA 94105",
+            "hourly_rate": 65,
+            "employment_status": "active",
             "created_at": "2025-10-01T12:00:00",
             "updated_at": "2025-10-01T12:00:00"
           },
-          "leave_id": "201",
+          "employee_id": "5",
           "success": true
         }
       },
@@ -147,15 +147,15 @@
         "arguments": {
           "action": "create",
           "operation": "create",
-          "reference_type": "leave_requests",
-          "reference_id": "201",
+          "reference_type": "employees",
+          "reference_id": "5",
           "user_id": "6"
         },
         "output": {
           "action": "create",
-          "log_id": "1247",
-          "reference_id": "201",
-          "reference_type": "leave_requests",
+          "log_id": "1249",
+          "reference_id": "5",
+          "reference_type": "employees",
           "timestamp": "2025-10-01T12:00:00",
           "user_id": "6"
         }
@@ -180,10 +180,10 @@
       },
       {
         "from": "instruction",
-        "to": "discover_user_employee_entities",
+        "to": "discover_job_entities",
         "connection": {
-          "output": "entity_type, filters.user_id",
-          "input": "entity_type, filters.user_id"
+          "output": "entity_type, title, status",
+          "input": "entity_type, filters.title, filters.status"
         }
       },
       {
@@ -204,33 +204,33 @@
       },
       {
         "from": "discover_user_employee_entities",
-        "to": "manage_leave_requests",
+        "to": "manage_employee",
         "connection": {
-          "output": "results[0].employee_id",
-          "input": "leave_data.employee_id"
+          "output": "results[0].user_id",
+          "input": "employee_data.user_id"
+        }
+      },
+      {
+        "from": "discover_job_entities",
+        "to": "manage_employee",
+        "connection": {
+          "output": "results[0].position_id",
+          "input": "employee_data.position_id"
         }
       },
       {
         "from": "instruction",
-        "to": "manage_leave_requests",
+        "to": "manage_employee",
         "connection": {
-          "output": "action, leave_type, start_date, end_date, status, requested_days, remaining_balance",
-          "input": "action, leave_data.leave_type, leave_data.start_date, leave_data.end_date, leave_data.status, leave_data.requested_days, leave_data.remaining_balance"
+          "output": "action, hire_date, manager_id, date_of_birth, address, hourly_rate, employment_status",
+          "input": "action, employee_data.hire_date, employee_data.manager_id, employee_data.date_of_birth, employee_data.address, employee_data.hourly_rate, employee_data.employment_status"
         }
       },
       {
-        "from": "discover_user_employee_entities",
-        "to": "manage_leave_requests",
-        "connection": {
-          "output": "results[0].user_id",
-          "input": "leave_data.approved_by"
-        }
-      },
-      {
-        "from": "manage_leave_requests",
+        "from": "manage_employee",
         "to": "manage_audit_logs",
         "connection": {
-          "output": "leave_id",
+          "output": "employee_id",
           "input": "reference_id"
         }
       },
@@ -252,8 +252,7 @@
       }
     ],
     "outputs": [
-
-        
+      
     ],
     "num_edges": 11
   }
