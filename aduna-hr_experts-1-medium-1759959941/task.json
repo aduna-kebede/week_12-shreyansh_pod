@@ -215,27 +215,11 @@
         }
       },
       {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": {
-          "output": "entity_type, employee_email",
-          "input": "entity_type, filters.email"
-        }
-      },
-      {
-        "from": "instruction",
+        "from": "discover_user_employee_entities",
         "to": "discover_user_employee_entities",
         "connection": {
           "output": "entity_type, employee_user_id",
           "input": "entity_type, filters.user_id"
-        }
-      },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "discover_performance_entities",
-        "connection": {
-          "output": "results[0].employee_id",
-          "input": "filters.employee_id"
         }
       },
       {
@@ -244,6 +228,14 @@
         "connection": {
           "output": "entity_type, review_type, review_period_start, review_period_end, status",
           "input": "entity_type, filters.review_type, filters.review_period_start, filters.review_period_end, filters.status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_performance_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
         }
       },
       {
@@ -306,6 +298,6 @@
     "outputs": [
       
     ],
-    "num_edges": 12
+    "num_edges": 11
   }
 }
