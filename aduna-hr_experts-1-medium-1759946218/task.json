@@ -179,7 +179,7 @@
         }
       },
       {
-        "from": "instruction",
+        "from": "discover_user_employee_entities",
         "to": "discover_user_employee_entities",
         "connection": {
           "output": "entity_type, filters.user_id",
