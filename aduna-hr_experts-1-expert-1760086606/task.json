@@ -369,22 +369,8 @@
           "input": "entity_type, filters.email"
         }
       },
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": {
-          "output": "entity_type, employee_email",
-          "input": "entity_type, filters.email"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": {
-          "output": "entity_type, manager_email",
-          "input": "entity_type, filters.email"
-        }
-      },
+    
+     
       {
         "from": "instruction",
         "to": "discover_job_entities",
@@ -393,14 +379,7 @@
           "input": "entity_type, filters.title, filters.status"
         }
       },
-      {
-        "from": "instruction",
-        "to": "discover_training_entities",
-        "connection": {
-          "output": "entity_type, first_program_name, status",
-          "input": "entity_type, filters.program_name, filters.status"
-        }
-      },
+     
       {
         "from": "instruction",
         "to": "discover_training_entities",
@@ -532,7 +511,7 @@
     ],
     "outputs": [
 
-        
+
     ],
     "num_edges": 21
   }
