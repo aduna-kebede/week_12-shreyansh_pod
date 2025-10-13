@@ -1,0 +1,532 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "6",
+    "instruction": "You are Michael Chen (michael.chen@company.com), a Recruiter. You need to successfully process Alex Thompson (alex.thompson@email.com, +1-555-0199, 456 Oak Street, Boston, MA 02108) through the complete recruitment pipeline for the Software Engineer position. Alex applied on 2025-10-28 through LinkedIn. You want to ensure Alex progresses through all necessary interview stages with Sarah Wilson (sarah.wilson@company.com) as the technical interviewer, with all evaluations completed and documented according to company standards.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "michael.chen@company.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-08-21T15:10:45",
+              "email": "michael.chen@company.com",
+              "first_name": "Michael",
+              "last_name": "Chen",
+              "mfa_enabled": true,
+              "phone_number": "+19386024033",
+              "role": "recruiter",
+              "status": "active",
+              "updated_at": "2024-12-15T09:30:22",
+              "user_id": "6"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_candidate",
+        "arguments": {
+          "action": "create",
+          "first_name": "Alex",
+          "last_name": "Thompson",
+          "email": "alex.thompson@email.com",
+          "source": "linkedin",
+          "phone_number": "+1-555-0199",
+          "address": "456 Oak Street, Boston, MA 02108"
+        },
+        "output": {
+          "success": true,
+          "message": "Candidate 'Alex Thompson' created successfully",
+          "candidate_id": "26",
+          "candidate_data": {
+            "candidate_id": "26",
+            "first_name": "Alex",
+            "last_name": "Thompson",
+            "email": "alex.thompson@email.com",
+            "phone_number": "+1-555-0199",
+            "address": "456 Oak Street, Boston, MA 02108",
+            "source": "social_media",
+            "status": "new",
+            "created_at": "2025-10-28T12:00:00",
+            "updated_at": "2025-10-28T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "discover_job_entities",
+        "arguments": {
+          "entity_type": "job_positions",
+          "filters": {
+            "title": "Software Engineer"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "job_positions",
+          "results": [
+            {
+              "position_id": "35",
+              "title": "Software Engineer",
+              "department_id": "7",
+              "job_level": "mid",
+              "employment_type": "full_time",
+              "hourly_rate_min": 45.0,
+              "hourly_rate_max": 65.0,
+              "status": "active",
+              "created_at": "2025-09-15T10:00:00",
+              "updated_at": "2025-10-01T14:30:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_job_application",
+        "arguments": {
+          "action": "create",
+          "application_data": {
+            "candidate_id": "26",
+            "position_id": "35",
+            "application_date": "2025-10-28",
+            "recruiter_id": "6"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "application_id": "16",
+          "message": "Job application 16 created successfully",
+          "application_data": {
+            "application_id": "16",
+            "candidate_id": "26",
+            "position_id": "35",
+            "application_date": "2025-10-28",
+            "status": "submitted",
+            "recruiter_id": "6",
+            "ai_screening_score": null,
+            "final_decision": null,
+            "created_at": "2025-10-28T12:00:00",
+            "updated_at": "2025-10-28T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_interview",
+        "arguments": {
+          "action": "create",
+          "interview_data": {
+            "application_id": "16",
+            "interviewer_id": "6",
+            "interview_type": "phone_screening",
+            "scheduled_date": "2025-11-05T14:00:00",
+            "duration_minutes": 45
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "interview_id": "9",
+          "message": "Interview 9 scheduled successfully",
+          "interview_data": {
+            "interview_id": "9",
+            "application_id": "16",
+            "interviewer_id": "6",
+            "interview_type": "phone_screening",
+            "scheduled_date": "2025-11-05T14:00:00",
+            "duration_minutes": 45,
+            "status": "scheduled",
+            "overall_rating": null,
+            "technical_score": null,
+            "communication_score": null,
+            "cultural_fit_score": null,
+            "recommendation": null,
+            "created_at": "2025-11-05T14:00:00",
+            "updated_at": "2025-11-05T14:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_interview",
+        "arguments": {
+          "action": "update",
+          "interview_id": "9",
+          "interview_data": {
+            "overall_rating": "excellent",
+            "communication_score": 9,
+            "recommendation": "hire",
+            "status": "completed"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "interview_id": "9",
+          "message": "Interview 9 outcome recorded successfully",
+          "interview_data": {
+            "interview_id": "9",
+            "application_id": "16",
+            "interviewer_id": "6",
+            "interview_type": "phone_screening",
+            "scheduled_date": "2025-11-05T14:00:00",
+            "duration_minutes": 45,
+            "status": "completed",
+            "overall_rating": "excellent",
+            "technical_score": null,
+            "communication_score": 9,
+            "cultural_fit_score": null,
+            "recommendation": "hire",
+            "created_at": "2025-11-05T14:00:00",
+            "updated_at": "2025-11-05T15:00:00"
+          }
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "sarah.wilson@company.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-06-15T14:20:30",
+              "email": "sarah.wilson@company.com",
+              "first_name": "Sarah",
+              "last_name": "Wilson",
+              "mfa_enabled": true,
+              "phone_number": "+1555987654",
+              "role": "software_engineer",
+              "status": "active",
+              "updated_at": "2024-12-10T16:45:12",
+              "user_id": "43"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_interview",
+        "arguments": {
+          "action": "create",
+          "interview_data": {
+            "application_id": "16",
+            "interviewer_id": "43",
+            "interview_type": "technical",
+            "scheduled_date": "2025-11-12T10:00:00",
+            "duration_minutes": 120
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "interview_id": "10",
+          "message": "Interview 10 scheduled successfully",
+          "interview_data": {
+            "interview_id": "10",
+            "application_id": "16",
+            "interviewer_id": "43",
+            "interview_type": "technical",
+            "scheduled_date": "2025-11-12T10:00:00",
+            "duration_minutes": 120,
+            "status": "scheduled",
+            "overall_rating": null,
+            "technical_score": null,
+            "communication_score": null,
+            "cultural_fit_score": null,
+            "recommendation": null,
+            "created_at": "2025-11-12T10:00:00",
+            "updated_at": "2025-11-12T10:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_interview",
+        "arguments": {
+          "action": "update",
+          "interview_id": "10",
+          "interview_data": {
+            "overall_rating": "good",
+            "technical_score": 8,
+            "communication_score": 7,
+            "cultural_fit_score": 8,
+            "recommendation": "hire",
+            "status": "completed"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "interview_id": "10",
+          "message": "Interview 10 outcome recorded successfully",
+          "interview_data": {
+            "interview_id": "10",
+            "application_id": "16",
+            "interviewer_id": "43",
+            "interview_type": "technical",
+            "scheduled_date": "2025-11-12T10:00:00",
+            "duration_minutes": 120,
+            "status": "completed",
+            "overall_rating": "good",
+            "technical_score": 8,
+            "communication_score": 7,
+            "cultural_fit_score": 8,
+            "recommendation": "hire",
+            "created_at": "2025-11-12T10:00:00",
+            "updated_at": "2025-11-12T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "candidate",
+          "reference_id": "26",
+          "user_id": "6",
+          "field_name": "candidate_creation",
+          "old_value": null,
+          "new_value": "new candidate created"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "job_application",
+          "reference_id": "16",
+          "user_id": "6",
+          "field_name": "application_creation",
+          "old_value": null,
+          "new_value": "new application created"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "interview",
+          "reference_id": "9",
+          "user_id": "6",
+          "field_name": "interview_scheduling",
+          "old_value": null,
+          "new_value": "phone screening scheduled"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "interview",
+          "reference_id": "9",
+          "user_id": "6",
+          "field_name": "interview_outcome",
+          "old_value": "scheduled",
+          "new_value": "completed with hire recommendation"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "interview",
+          "reference_id": "10",
+          "user_id": "6",
+          "field_name": "interview_scheduling",
+          "old_value": null,
+          "new_value": "technical interview scheduled"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "interview",
+          "reference_id": "10",
+          "user_id": "6",
+          "field_name": "interview_outcome",
+          "old_value": "scheduled",
+          "new_value": "completed with hire recommendation"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_candidate",
+        "connection": {
+          "output": "action, first_name, last_name, email, source, phone_number, address",
+          "input": "action, first_name, last_name, email, source, phone_number, address"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_job_entities",
+        "connection": {
+          "output": "entity_type, position_title",
+          "input": "entity_type, filters.title"
+        }
+      },
+      {
+        "from": "manage_candidate",
+        "to": "manage_job_application",
+        "connection": {
+          "output": "candidate_id",
+          "input": "application_data.candidate_id"
+        }
+      },
+      {
+        "from": "discover_job_entities",
+        "to": "manage_job_application",
+        "connection": {
+          "output": "results[0].position_id",
+          "input": "application_data.position_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_job_application",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "application_data.recruiter_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_job_application",
+        "connection": {
+          "output": "action, application_date",
+          "input": "action, application_data.application_date"
+        }
+      },
+      {
+        "from": "manage_job_application",
+        "to": "manage_interview",
+        "connection": {
+          "output": "application_id",
+          "input": "interview_data.application_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_interview",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "interview_data.interviewer_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_interview",
+        "connection": {
+          "output": "action, interview_type, scheduled_date, duration_minutes, overall_rating, communication_score, recommendation, status, technical_score, cultural_fit_score",
+          "input": "action, interview_data.interview_type, interview_data.scheduled_date, interview_data.duration_minutes, interview_data.overall_rating, interview_data.communication_score, interview_data.recommendation, interview_data.status, interview_data.technical_score, interview_data.cultural_fit_score"
+        }
+      },
+      {
+        "from": "manage_interview",
+        "to": "manage_interview",
+        "connection": {
+          "output": "interview_id",
+          "input": "interview_id"
+        }
+      },
+      {
+        "from": "manage_candidate",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "candidate_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type, field_name, old_value, new_value",
+          "input": "action, operation, reference_type, field_name, old_value, new_value"
+        }
+      },
+      {
+        "from": "manage_interview",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "interview_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "manage_job_application",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "application_id",
+          "input": "reference_id"
+        }
+      }
+    ],
+    "outputs": [
+      "26"
+    ],
+    "num_edges": 16
+  }
+}
