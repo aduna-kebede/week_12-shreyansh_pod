@@ -397,48 +397,24 @@
         "from": "discover_user_employee_entities",
         "to": "discover_payroll_entities",
         "connection": {
-          "output": "results[0].employee_id",
-          "input": "filters.employee_id"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_payroll_entities",
-        "connection": {
-          "output": "entity_type, status",
-          "input": "entity_type, filters.status"
+          "output": "entity_type, results[0].employee_id",
+          "input": "entity_type, filters.employee_id"
         }
       },
       {
         "from": "discover_user_employee_entities",
         "to": "discover_benefits_entities",
         "connection": {
-          "output": "results[0].employee_id",
-          "input": "filters.employee_id"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_benefits_entities",
-        "connection": {
-          "output": "entity_type, status",
-          "input": "entity_type, filters.status"
+          "output": "entity_type, results[0].employee_id",
+          "input": "entity_type, filters.employee_id"
         }
       },
       {
         "from": "discover_user_employee_entities",
         "to": "discover_training_entities",
         "connection": {
-          "output": "results[0].employee_id",
-          "input": "filters.employee_id"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_training_entities",
-        "connection": {
-          "output": "entity_type, status",
-          "input": "entity_type, filters.status"
+          "output": "entity_type, results[0].employee_id",
+          "input": "entity_type, filters.employee_id"
         }
       },
       {
@@ -539,7 +515,7 @@
       }
     ],
     "outputs": ["8"],
-    "num_edges": 22
+    "num_edges": 19
   }
 }
 
