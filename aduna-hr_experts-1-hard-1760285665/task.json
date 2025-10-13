@@ -1,0 +1,382 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "8",
+    "instruction": "You are Jennifer Martinez (jennifer.martinez@company.com), a Payroll Administrator. You need to finalize payroll for Robert Chen (robert.chen@company.com) for the pay period October 1-15, 2025. Robert submitted a timesheet for October 8th showing 8 hours worked on project 'CLOUD-2025' that needs your approval before payroll can be processed at his hourly rate of $72.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "jennifer.martinez@company.com"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "users",
+          "count": 1,
+          "results": [
+            {
+              "user_id": "8",
+              "first_name": "Jennifer",
+              "last_name": "Martinez",
+              "email": "jennifer.martinez@company.com",
+              "phone_number": "+15559876540",
+              "role": "payroll_administrator",
+              "status": "active",
+              "mfa_enabled": true,
+              "created_at": "2023-03-20T10:15:00",
+              "updated_at": "2024-09-18T14:30:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "robert.chen@company.com"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "users",
+          "count": 1,
+          "results": [
+            {
+              "user_id": "24",
+              "first_name": "Robert",
+              "last_name": "Chen",
+              "email": "robert.chen@company.com",
+              "phone_number": "+15558765432",
+              "role": "employee",
+              "status": "active",
+              "mfa_enabled": true,
+              "created_at": "2023-06-15T09:00:00",
+              "updated_at": "2024-10-01T11:20:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "employees",
+          "filters": {
+            "user_id": "24"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "employees",
+          "count": 1,
+          "results": [
+            {
+              "employee_id": "11",
+              "user_id": "24",
+              "position_id": "32",
+              "hire_date": "2023-06-15",
+              "employment_status": "active",
+              "manager_id": "5",
+              "date_of_birth": "1990-03-12",
+              "address": "567 Silicon Valley Blvd, San Jose, CA 95110",
+              "hourly_rate": 72,
+              "created_at": "2023-06-15T09:00:00",
+              "updated_at": "2024-10-01T11:20:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_timesheet_entities",
+        "arguments": {
+          "entity_type": "employee_timesheets",
+          "filters": {
+            "employee_id": "11",
+            "status": "submitted"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "employee_timesheets",
+          "count": 1,
+          "results": [
+            {
+              "timesheet_id": "301",
+              "employee_id": "11",
+              "work_date": "2025-10-08",
+              "clock_in_time": "2025-10-08T09:00:00",
+              "clock_out_time": "2025-10-08T17:30:00",
+              "break_duration_minutes": 30,
+              "total_hours": 8.0,
+              "project_code": "CLOUD-2025",
+              "approved_by": null,
+              "status": "submitted",
+              "created_at": "2025-10-08T17:30:00",
+              "updated_at": "2025-10-08T17:30:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "approve_timesheets",
+          "requester_email": "jennifer.martinez@company.com"
+        },
+        "output": {
+          "approved": true,
+          "approval_id": "APP-2025-015",
+          "approver": "payroll_administrator",
+          "message": "Timesheet approval authorized"
+        }
+      },
+      {
+        "name": "manage_timesheet_entries",
+        "arguments": {
+          "action": "update",
+          "timesheet_id": "301",
+          "timesheet_data": {
+            "status": "approved",
+            "approved_by": "8"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "timesheet_id": "301",
+          "message": "Timesheet entry 301 updated successfully",
+          "timesheet_data": {
+            "timesheet_id": "301",
+            "employee_id": "11",
+            "work_date": "2025-10-08",
+            "clock_in_time": "2025-10-08T09:00:00",
+            "clock_out_time": "2025-10-08T17:30:00",
+            "break_duration_minutes": 30,
+            "total_hours": 8.0,
+            "project_code": "CLOUD-2025",
+            "approved_by": "8",
+            "status": "approved",
+            "created_at": "2025-10-08T17:30:00",
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "process_payroll",
+          "requester_email": "jennifer.martinez@company.com"
+        },
+        "output": {
+          "approved": true,
+          "approval_id": "APP-2025-016",
+          "approver": "finance_officer",
+          "message": "Payroll processing authorized"
+        }
+      },
+      {
+        "name": "manage_payroll_record",
+        "arguments": {
+          "action": "create",
+          "payroll_data": {
+            "employee_id": "11",
+            "pay_period_start": "2025-10-01",
+            "pay_period_end": "2025-10-15",
+            "hourly_rate": 72,
+            "payment_date": "2025-10-20",
+            "status": "approved",
+            "approved_by": "8"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "payroll_id": "450",
+          "message": "Payroll record 450 created successfully with 8.0 hours",
+          "payroll_data": {
+            "payroll_id": "450",
+            "employee_id": "11",
+            "pay_period_start": "2025-10-01",
+            "pay_period_end": "2025-10-15",
+            "hours_worked": 8.0,
+            "hourly_rate": 72,
+            "payment_date": "2025-10-20",
+            "status": "approved",
+            "approved_by": "8",
+            "created_at": "2025-10-01T12:00:00",
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "employee_timesheets",
+          "reference_id": "301",
+          "field_name": "status",
+          "old_value": "submitted",
+          "new_value": "approved",
+          "user_id": "8"
+        },
+        "output": {
+          "action": "create",
+          "log_id": "2101",
+          "reference_id": "301",
+          "reference_type": "employee_timesheets",
+          "field_name": "status",
+          "old_value": "submitted",
+          "new_value": "approved",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "8"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "payroll_records",
+          "reference_id": "450",
+          "user_id": "8"
+        },
+        "output": {
+          "action": "create",
+          "log_id": "2103",
+          "reference_id": "450",
+          "reference_type": "payroll_records",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "8"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, results[0].user_id",
+          "input": "entity_type, filters.user_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_timesheet_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_timesheet_entities",
+        "connection": {
+          "output": "entity_type, status",
+          "input": "entity_type, filters.status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "discover_timesheet_entities",
+        "to": "manage_timesheet_entries",
+        "connection": {
+          "output": "results[0].timesheet_id",
+          "input": "timesheet_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_timesheet_entries",
+        "connection": {
+          "output": "action, status",
+          "input": "action, timesheet_data.status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_timesheet_entries",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "timesheet_data.approved_by"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_payroll_record",
+        "connection": {
+          "output": "results[0].employee_id, results[0].user_id",
+          "input": "payroll_data.employee_id, payroll_data.approved_by"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_payroll_record",
+        "connection": {
+          "output": "action, pay_period_start, pay_period_end, hourly_rate, payment_date, status",
+          "input": "action, payroll_data.pay_period_start, payroll_data.pay_period_end, payroll_data.hourly_rate, payroll_data.payment_date, payroll_data.status"
+        }
+      },
+      {
+        "from": "manage_timesheet_entries",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "timesheet_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type, field_name, old_value, new_value",
+          "input": "action, operation, reference_type, field_name, old_value, new_value"
+        }
+      }
+    ],
+    "outputs": [
+      "450"
+    ],
+    "num_edges": 14
+  }
+}
+

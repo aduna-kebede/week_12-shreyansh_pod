@@ -1,0 +1,545 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "7",
+    "instruction": "You are Patricia Williams (patricia.williams@company.com), an HR Manager. Emily Rodriguez (emily.rodriguez@company.com) is leaving the company on October 31st, 2025. You need to complete her offboarding process ensuring all compliance requirements are met. Emily currently has active health insurance and retirement plan enrollments, plus an incomplete 'Cybersecurity Fundamentals' training program. Her employee status should be set to terminated, and her user account must be deactivated.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "patricia.williams@company.com"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "users",
+          "count": 1,
+          "results": [
+            {
+              "user_id": "7",
+              "first_name": "Patricia",
+              "last_name": "Williams",
+              "email": "patricia.williams@company.com",
+              "phone_number": "+15557654398",
+              "role": "hr_manager",
+              "status": "active",
+              "mfa_enabled": true,
+              "created_at": "2022-11-10T08:45:00",
+              "updated_at": "2024-09-25T16:20:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "emily.rodriguez@company.com"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "users",
+          "count": 1,
+          "results": [
+            {
+              "user_id": "19",
+              "first_name": "Emily",
+              "last_name": "Rodriguez",
+              "email": "emily.rodriguez@company.com",
+              "phone_number": "+15558761234",
+              "role": "employee",
+              "status": "active",
+              "mfa_enabled": true,
+              "created_at": "2022-08-15T09:30:00",
+              "updated_at": "2024-08-15T14:10:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "employees",
+          "filters": {
+            "user_id": "19"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "employees",
+          "count": 1,
+          "results": [
+            {
+              "employee_id": "8",
+              "user_id": "19",
+              "position_id": "28",
+              "hire_date": "2022-08-15",
+              "employment_status": "active",
+              "manager_id": "5",
+              "date_of_birth": "1992-11-20",
+              "address": "890 Market Street, San Francisco, CA 94103",
+              "hourly_rate": 58,
+              "created_at": "2022-08-15T09:30:00",
+              "updated_at": "2024-08-15T14:10:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "employee_offboarding",
+          "requester_email": "patricia.williams@company.com"
+        },
+        "output": {
+          "approved": true,
+          "approval_id": "APP-2025-020",
+          "approver": "hr_manager",
+          "message": "Employee offboarding authorized by HR Manager"
+        }
+      },
+      {
+        "name": "check_approval",
+        "arguments": {
+          "action": "compliance_verification",
+          "requester_email": "patricia.williams@company.com"
+        },
+        "output": {
+          "approved": true,
+          "approval_id": "APP-2025-021",
+          "approver": "compliance_officer",
+          "message": "Compliance verification completed for offboarding"
+        }
+      },
+      {
+        "name": "discover_payroll_entities",
+        "arguments": {
+          "entity_type": "payroll_records",
+          "filters": {
+            "employee_id": "8",
+            "status": "pending"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "payroll_records",
+          "count": 0,
+          "results": []
+        }
+      },
+      {
+        "name": "discover_benefits_entities",
+        "arguments": {
+          "entity_type": "employee_benefits",
+          "filters": {
+            "employee_id": "8",
+            "status": "active"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "employee_benefits",
+          "count": 2,
+          "results": [
+            {
+              "enrollment_id": "505",
+              "employee_id": "8",
+              "plan_id": "101",
+              "enrollment_date": "2022-09-01",
+              "status": "active",
+              "coverage_level": "family",
+              "beneficiary_name": "Carlos Rodriguez",
+              "beneficiary_relationship": "spouse",
+              "created_at": "2022-09-01T10:00:00",
+              "updated_at": "2022-09-01T10:00:00"
+            },
+            {
+              "enrollment_id": "506",
+              "employee_id": "8",
+              "plan_id": "104",
+              "enrollment_date": "2022-09-01",
+              "status": "active",
+              "coverage_level": "employee_only",
+              "beneficiary_name": null,
+              "beneficiary_relationship": null,
+              "created_at": "2022-09-01T10:00:00",
+              "updated_at": "2022-09-01T10:00:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_training_entities",
+        "arguments": {
+          "entity_type": "employee_training",
+          "filters": {
+            "employee_id": "8",
+            "status": "enrolled"
+          }
+        },
+        "output": {
+          "success": true,
+          "entity_type": "employee_training",
+          "count": 1,
+          "results": [
+            {
+              "training_record_id": "650",
+              "employee_id": "8",
+              "program_id": "205",
+              "enrollment_date": "2025-09-15",
+              "status": "enrolled",
+              "completion_date": null,
+              "score": null,
+              "certificate_issued": false,
+              "expiry_date": null,
+              "created_at": "2025-09-15T10:00:00",
+              "updated_at": "2025-09-15T10:00:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_employee",
+        "arguments": {
+          "action": "update",
+          "employee_id": "8",
+          "employment_status": "terminated"
+        },
+        "output": {
+          "success": true,
+          "message": "Employee with ID '8' updated successfully",
+          "employee_id": "8",
+          "employee_data": {
+            "employee_id": "8",
+            "user_id": "19",
+            "position_id": "28",
+            "hire_date": "2022-08-15",
+            "employment_status": "terminated",
+            "manager_id": "5",
+            "date_of_birth": "1992-11-20",
+            "address": "890 Market Street, San Francisco, CA 94103",
+            "hourly_rate": 58,
+            "created_at": "2022-08-15T09:30:00",
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_user",
+        "arguments": {
+          "action": "update",
+          "user_id": "19",
+          "status": "inactive"
+        },
+        "output": {
+          "success": true,
+          "message": "User with ID '19' updated successfully",
+          "user_id": "19",
+          "user_data": {
+            "user_id": "19",
+            "first_name": "Emily",
+            "last_name": "Rodriguez",
+            "email": "emily.rodriguez@company.com",
+            "phone_number": "+15558761234",
+            "role": "employee",
+            "status": "inactive",
+            "mfa_enabled": true,
+            "created_at": "2022-08-15T09:30:00",
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_employee_benefits",
+        "arguments": {
+          "action": "update",
+          "enrollment_id": "505",
+          "benefits_data": {
+            "status": "terminated"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "enrollment_id": "505",
+          "message": "Employee benefits enrollment 505 updated successfully",
+          "benefits_data": {
+            "enrollment_id": "505",
+            "employee_id": "8",
+            "plan_id": "101",
+            "enrollment_date": "2022-09-01",
+            "status": "terminated",
+            "coverage_level": "family",
+            "beneficiary_name": "Carlos Rodriguez",
+            "beneficiary_relationship": "spouse",
+            "created_at": "2022-09-01T10:00:00",
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_employee_benefits",
+        "arguments": {
+          "action": "update",
+          "enrollment_id": "506",
+          "benefits_data": {
+            "status": "terminated"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "enrollment_id": "506",
+          "message": "Employee benefits enrollment 506 updated successfully",
+          "benefits_data": {
+            "enrollment_id": "506",
+            "employee_id": "8",
+            "plan_id": "104",
+            "enrollment_date": "2022-09-01",
+            "status": "terminated",
+            "coverage_level": "employee_only",
+            "beneficiary_name": null,
+            "beneficiary_relationship": null,
+            "created_at": "2022-09-01T10:00:00",
+            "updated_at": "2025-10-01T12:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_employee_training",
+        "arguments": {
+          "operation": "update",
+          "training_record_id": "650",
+          "status": "cancelled"
+        },
+        "output": {
+          "training_record_id": "650",
+          "employee_id": "8",
+          "program_id": "205",
+          "enrollment_date": "2025-09-15",
+          "status": "cancelled",
+          "completion_date": null,
+          "score": null,
+          "certificate_issued": false,
+          "expiry_date": null,
+          "created_at": "2025-09-15T10:00:00",
+          "updated_at": "2025-10-01T12:00:00"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "employees",
+          "reference_id": "8",
+          "field_name": "employment_status",
+          "old_value": "active",
+          "new_value": "terminated",
+          "user_id": "7"
+        },
+        "output": {
+          "action": "create",
+          "log_id": "2201",
+          "reference_id": "8",
+          "reference_type": "employees",
+          "field_name": "employment_status",
+          "old_value": "active",
+          "new_value": "terminated",
+          "timestamp": "2025-10-01T12:00:00",
+          "user_id": "7"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, results[0].user_id",
+          "input": "entity_type, filters.user_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_payroll_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_payroll_entities",
+        "connection": {
+          "output": "entity_type, status",
+          "input": "entity_type, filters.status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_benefits_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_benefits_entities",
+        "connection": {
+          "output": "entity_type, status",
+          "input": "entity_type, filters.status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_training_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_training_entities",
+        "connection": {
+          "output": "entity_type, status",
+          "input": "entity_type, filters.status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_employee",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee",
+        "connection": {
+          "output": "action, employment_status",
+          "input": "action, employment_status"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_user",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_user",
+        "connection": {
+          "output": "action, status",
+          "input": "action, status"
+        }
+      },
+      {
+        "from": "discover_benefits_entities",
+        "to": "manage_employee_benefits",
+        "connection": {
+          "output": "results[0].enrollment_id",
+          "input": "enrollment_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee_benefits",
+        "connection": {
+          "output": "action, status",
+          "input": "action, benefits_data.status"
+        }
+      },
+      {
+        "from": "discover_benefits_entities",
+        "to": "manage_employee_benefits",
+        "connection": {
+          "output": "results[1].enrollment_id",
+          "input": "enrollment_id"
+        }
+      },
+      {
+        "from": "discover_training_entities",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "results[0].training_record_id",
+          "input": "training_record_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "operation, status",
+          "input": "operation, status"
+        }
+      },
+      {
+        "from": "manage_employee",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "employee_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type, field_name, old_value, new_value",
+          "input": "action, operation, reference_type, field_name, old_value, new_value"
+        }
+      }
+    ],
+    "outputs": ["8"],
+    "num_edges": 22
+  }
+}
+

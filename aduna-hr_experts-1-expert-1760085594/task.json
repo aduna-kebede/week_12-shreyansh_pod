@@ -363,6 +363,7 @@
       }
     ],
     "edges": [
+     
       {
         "from": "instruction",
         "to": "discover_user_employee_entities",
@@ -372,37 +373,15 @@
         }
       },
       {
-        "from": "instruction",
+        "from": "discover_user_employee_entities",
         "to": "discover_user_employee_entities",
         "connection": {
-          "output": "entity_type, first_employee_email",
-          "input": "entity_type, filters.email"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": {
-          "output": "entity_type, first_employee_user_id",
+          "output": "entity_type, user_id",
           "input": "entity_type, filters.user_id"
         }
       },
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": {
-          "output": "entity_type, second_employee_email",
-          "input": "entity_type, filters.email"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "discover_user_employee_entities",
-        "connection": {
-          "output": "entity_type, second_employee_user_id",
-          "input": "entity_type, filters.user_id"
-        }
-      },
+    
+      
       {
         "from": "discover_user_employee_entities",
         "to": "discover_performance_entities",
@@ -419,14 +398,7 @@
           "input": "entity_type, filters.review_type, filters.review_period_start, filters.review_period_end, filters.status"
         }
       },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "discover_performance_entities",
-        "connection": {
-          "output": "results[0].employee_id",
-          "input": "filters.employee_id"
-        }
-      },
+     
       {
         "from": "discover_user_employee_entities",
         "to": "check_approval",
@@ -455,34 +427,13 @@
         "from": "instruction",
         "to": "manage_performance_review",
         "connection": {
-          "output": "action, first_overall_rating, first_communication_score, first_teamwork_score, first_leadership_score, status",
+          "output": "action, overall_rating, communication_score, teamwork_score, leadership_score, status",
           "input": "action, review_data.overall_rating, review_data.communication_score, review_data.teamwork_score, review_data.leadership_score, review_data.status"
         }
       },
-      {
-        "from": "discover_performance_entities",
-        "to": "manage_performance_review",
-        "connection": {
-          "output": "results[0].review_id",
-          "input": "review_id"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "manage_performance_review",
-        "connection": {
-          "output": "action, second_overall_rating, second_communication_score, second_teamwork_score, second_technical_skills_score, status",
-          "input": "action, review_data.overall_rating, review_data.communication_score, review_data.teamwork_score, review_data.technical_skills_score, review_data.status"
-        }
-      },
-      {
-        "from": "manage_performance_review",
-        "to": "manage_audit_logs",
-        "connection": {
-          "output": "review_id",
-          "input": "reference_id"
-        }
-      },
+     
+     
+      
       {
         "from": "discover_user_employee_entities",
         "to": "manage_audit_logs",
@@ -509,6 +460,6 @@
       }
     ],
     "outputs": ["201", "202"],
-    "num_edges": 18
+    "num_edges": 11
   }
 }
