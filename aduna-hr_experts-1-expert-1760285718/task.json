@@ -378,19 +378,11 @@
         }
       },
       {
-        "from": "discover_user_employee_entities",
-        "to": "check_approval",
-        "connection": {
-          "output": "results[0].email",
-          "input": "requester_email"
-        }
-      },
-      {
         "from": "instruction",
         "to": "check_approval",
         "connection": {
-          "output": "action",
-          "input": "action"
+          "output": "email, action",
+          "input": "requester_email, action"
         }
       },
       {
@@ -515,7 +507,7 @@
       }
     ],
     "outputs": ["8"],
-    "num_edges": 19
+    "num_edges": 18
   }
 }
 
