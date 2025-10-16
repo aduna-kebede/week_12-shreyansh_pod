@@ -1,0 +1,377 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "7",
+    "instruction": "You are Jennifer Adams (jennifer.adams@company.com), an HR Manager. Create a new mandatory cybersecurity training program called 'Data Protection Essentials' for all employees. The program should be 4 hours long, delivered online, and focus on compliance training. You want to ensure all employees complete this training by the end of Q1 2025.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "jennifer.adams@company.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-08-21T15:10:45",
+              "email": "jennifer.adams@company.com",
+              "first_name": "Jennifer",
+              "last_name": "Adams",
+              "mfa_enabled": true,
+              "phone_number": "+19386024033",
+              "role": "hr_manager",
+              "status": "active",
+              "user_id": "7",
+              "username": "jennifer.adams"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_training_programs",
+        "arguments": {
+          "action": "create",
+          "program_data": {
+            "program_name": "Data Protection Essentials",
+            "program_type": "compliance",
+            "duration_hours": 4,
+            "delivery_method": "online",
+            "mandatory": true,
+            "status": "active"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "program_id": "15",
+          "message": "Training program 15 created successfully",
+          "program_data": {
+            "program_id": "15",
+            "program_name": "Data Protection Essentials",
+            "program_type": "compliance",
+            "duration_hours": 4,
+            "delivery_method": "online",
+            "mandatory": true,
+            "status": "active",
+            "created_at": "2025-01-15T10:00:00",
+            "updated_at": "2025-01-15T10:00:00"
+          }
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "employees",
+          "filters": {
+            "employment_status": "active"
+          }
+        },
+        "output": {
+          "count": 3,
+          "entity_type": "employees",
+          "results": [
+            {
+              "employee_id": "12",
+              "user_id": "22",
+              "position_id": "8",
+              "hire_date": "2023-03-15",
+              "employment_status": "active",
+              "manager_id": "5",
+              "date_of_birth": "1990-07-22",
+              "address": "123 Main Street, Austin, TX 78701",
+              "hourly_rate": 45.0,
+              "created_at": "2023-03-15T09:00:00",
+              "updated_at": "2024-11-20T16:45:00"
+            },
+            {
+              "employee_id": "15",
+              "user_id": "25",
+              "position_id": "12",
+              "hire_date": "2023-06-01",
+              "employment_status": "active",
+              "manager_id": "7",
+              "date_of_birth": "1985-12-10",
+              "address": "789 Tech Drive, San Francisco, CA 94105",
+              "hourly_rate": 55.0,
+              "created_at": "2023-06-01T09:00:00",
+              "updated_at": "2024-11-20T16:45:00"
+            },
+            {
+              "employee_id": "18",
+              "user_id": "28",
+              "position_id": "15",
+              "hire_date": "2023-08-10",
+              "employment_status": "active",
+              "manager_id": "9",
+              "date_of_birth": "1988-04-15",
+              "address": "456 Oak Avenue, Portland, OR 97201",
+              "hourly_rate": 52.0,
+              "created_at": "2023-08-10T09:00:00",
+              "updated_at": "2024-11-20T16:45:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_employee_training",
+        "arguments": {
+          "action": "create",
+          "training_data": {
+            "employee_id": "12",
+            "program_id": "15",
+            "enrollment_date": "2025-01-15",
+            "status": "enrolled"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "training_record_id": "25",
+          "message": "Employee training record 25 created successfully",
+          "training_data": {
+            "training_record_id": "25",
+            "employee_id": "12",
+            "program_id": "15",
+            "enrollment_date": "2025-01-15",
+            "completion_date": null,
+            "status": "enrolled",
+            "score": null,
+            "certificate_issued": false,
+            "expiry_date": null,
+            "created_at": "2025-01-15T10:30:00",
+            "updated_at": "2025-01-15T10:30:00"
+          }
+        }
+      },
+      {
+        "name": "manage_employee_training",
+        "arguments": {
+          "action": "create",
+          "training_data": {
+            "employee_id": "15",
+            "program_id": "15",
+            "enrollment_date": "2025-01-15",
+            "status": "enrolled"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "training_record_id": "26",
+          "message": "Employee training record 26 created successfully",
+          "training_data": {
+            "training_record_id": "26",
+            "employee_id": "15",
+            "program_id": "15",
+            "enrollment_date": "2025-01-15",
+            "completion_date": null,
+            "status": "enrolled",
+            "score": null,
+            "certificate_issued": false,
+            "expiry_date": null,
+            "created_at": "2025-01-15T10:30:00",
+            "updated_at": "2025-01-15T10:30:00"
+          }
+        }
+      },
+      {
+        "name": "manage_employee_training",
+        "arguments": {
+          "action": "create",
+          "training_data": {
+            "employee_id": "18",
+            "program_id": "15",
+            "enrollment_date": "2025-01-15",
+            "status": "enrolled"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "create",
+          "training_record_id": "27",
+          "message": "Employee training record 27 created successfully",
+          "training_data": {
+            "training_record_id": "27",
+            "employee_id": "18",
+            "program_id": "15",
+            "enrollment_date": "2025-01-15",
+            "completion_date": null,
+            "status": "enrolled",
+            "score": null,
+            "certificate_issued": false,
+            "expiry_date": null,
+            "created_at": "2025-01-15T10:30:00",
+            "updated_at": "2025-01-15T10:30:00"
+          }
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "training_program",
+          "reference_id": "15",
+          "user_id": "7",
+          "field_name": "training_program_creation",
+          "old_value": null,
+          "new_value": "Data Protection Essentials compliance training program created"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "employee_training",
+          "reference_id": "25",
+          "user_id": "7",
+          "field_name": "training_enrollment",
+          "old_value": null,
+          "new_value": "employee enrolled in Data Protection Essentials training"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "employee_training",
+          "reference_id": "26",
+          "user_id": "7",
+          "field_name": "training_enrollment",
+          "old_value": null,
+          "new_value": "employee enrolled in Data Protection Essentials training"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "employee_training",
+          "reference_id": "27",
+          "user_id": "7",
+          "field_name": "training_enrollment",
+          "old_value": null,
+          "new_value": "employee enrolled in Data Protection Essentials training"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_training_programs",
+        "connection": {
+          "output": "action, program_name, program_type, duration_hours, delivery_method, mandatory, status",
+          "input": "action, program_data.program_name, program_data.program_type, program_data.duration_hours, program_data.delivery_method, program_data.mandatory, program_data.status"
+        }
+      },
+
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "filters.user_id"
+        }
+      },
+      
+    
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "results[].employee_id",
+          "input": "training_data.employee_id"
+        }
+      },
+      {
+        "from": "manage_training_programs",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "program_id",
+          "input": "training_data.program_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_employee_training",
+        "connection": {
+          "output": "action, enrollment_date, status",
+          "input": "action, training_data.enrollment_date, training_data.status"
+        }
+      },
+      
+      {
+        "from": "manage_training_programs",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "program_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "manage_employee_training",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "training_record_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type, field_name, old_value, new_value",
+          "input": "action, operation, reference_type, field_name, old_value, new_value"
+        }
+      }
+    ],
+    "outputs": [
+      "15"
+    ],
+    "num_edges": 10
+  }
+}
