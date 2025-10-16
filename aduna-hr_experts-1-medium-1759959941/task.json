@@ -238,20 +238,13 @@
           "input": "filters.employee_id"
         }
       },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "check_approval",
-        "connection": {
-          "output": "results[0].email",
-          "input": "requester_email"
-        }
-      },
+     
       {
         "from": "instruction",
         "to": "check_approval",
         "connection": {
-          "output": "action",
-          "input": "action"
+           "output": "requester_email, action",
+          "input": "requester_email, action"
         }
       },
       {
@@ -298,6 +291,6 @@
     "outputs": [
       
     ],
-    "num_edges": 11
+    "num_edges": 10
   }
 }
