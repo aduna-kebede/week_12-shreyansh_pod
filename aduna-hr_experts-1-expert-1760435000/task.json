@@ -1,0 +1,454 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 1,
+  "task": {
+    "user_id": "8",
+    "instruction": "You are Lisa Rodriguez (lisa.rodriguez@company.com), a Finance Manager. Process and approve a pending expense reimbursement request from Mark Williams (mark.williams@company.com) who submitted a $450 travel expense for client meetings. The receipt has been verified and the expense is within company policy limits. After approval, create a payroll deduction for the approved amount and update Mark's payroll record for the current pay period ending 2025-01-31.",
+    "actions": [
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "lisa.rodriguez@company.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-09-15T10:30:00",
+              "email": "lisa.rodriguez@company.com",
+              "first_name": "Lisa",
+              "last_name": "Rodriguez",
+              "mfa_enabled": true,
+              "phone_number": "+15551234567",
+              "role": "finance_manager",
+              "status": "active",
+              "user_id": "8",
+              "username": "lisa.rodriguez"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_expense_entities",
+        "arguments": {
+          "entity_type": "expense_reimbursements",
+          "filters": {
+            "status": "submitted"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "expense_reimbursements",
+          "results": [
+            {
+              "reimbursement_id": "101",
+              "employee_id": "12",
+              "expense_date": "2025-01-10",
+              "amount": 450.0,
+              "expense_type": "travel",
+              "receipt_file_path": "/receipts/mark_travel_20250110.pdf",
+              "status": "submitted",
+              "approved_by": null,
+              "payment_date": null,
+              "created_at": "2025-01-11T14:30:00",
+              "updated_at": "2025-01-11T14:30:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "mark.williams@company.com"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "filters": {
+            "email": "mark.williams@company.com"
+          },
+          "results": [
+            {
+              "user_id": "22",
+              "email": "mark.williams@company.com",
+              "first_name": "Mark",
+              "last_name": "Williams",
+              "role": "employee",
+              "status": "active"
+            }
+          ]
+        }
+      },
+      {
+        "name": "discover_user_employee_entities",
+        "arguments": {
+          "entity_type": "employees",
+          "filters": {
+            "user_id": "22"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "employees",
+          "filters": {
+            "user_id": "22"
+          },
+          "results": [
+            {
+              "employee_id": "12",
+              "user_id": "22",
+              "position_id": "5",
+              "manager_id": "8",
+              "employment_status": "active",
+              "hire_date": "2023-03-15",
+              "hourly_rate": 45.0
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_expense_reimbursements",
+        "arguments": {
+          "action": "update",
+          "reimbursement_id": "101",
+          "reimbursement_data": {
+            "status": "approved",
+            "approved_by": "8",
+            "payment_date": "2025-01-20"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "reimbursement_id": "101",
+          "message": "Expense reimbursement 101 updated successfully",
+          "reimbursement_data": {
+            "reimbursement_id": "101",
+            "employee_id": "12",
+            "expense_date": "2025-01-10",
+            "amount": 450.0,
+            "expense_type": "travel",
+            "receipt_file_path": "/receipts/mark_travel_20250110.pdf",
+            "status": "approved",
+            "approved_by": "8",
+            "payment_date": "2025-01-20",
+            "created_at": "2025-01-11T14:30:00",
+            "updated_at": "2025-01-20T10:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "expense_reimbursement",
+          "reference_id": "101",
+          "user_id": "8",
+          "field_name": "expense_approval",
+          "old_value": "submitted",
+          "new_value": "approved - $450 travel expense"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "discover_payroll_entities",
+        "arguments": {
+          "entity_type": "payroll_records",
+          "filters": {
+            "employee_id": "12",
+            "pay_period_end": "2025-01-31"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "payroll_records",
+          "results": [
+            {
+              "payroll_id": "201",
+              "employee_id": "12",
+              "pay_period_start": "2025-01-01",
+              "pay_period_end": "2025-01-31",
+              "hours_worked": 160.0,
+              "hourly_rate": 45.0,
+              "gross_pay": 7200.0,
+              "status": "pending",
+              "created_at": "2025-01-31T17:00:00",
+              "updated_at": "2025-01-31T17:00:00"
+            }
+          ]
+        }
+      },
+      {
+        "name": "manage_payroll_deduction",
+        "arguments": {
+          "payroll_id": "201",
+          "deduction_type": "expense_reimbursement",
+          "amount": 450.0,
+          "created_by": "8"
+        },
+        "output": {
+          "success": true,
+          "message": "Payroll deduction created successfully",
+          "deduction_id": "301",
+          "deduction_data": {
+            "deduction_id": "301",
+            "payroll_id": "201",
+            "deduction_type": "expense_reimbursement",
+            "amount": 450.0,
+            "created_by": "8",
+            "created_at": "2025-01-20T11:00:00",
+            "updated_at": "2025-01-20T11:00:00"
+          }
+        }
+      },
+      {
+        "name": "manage_payroll_record",
+        "arguments": {
+          "action": "update",
+          "payroll_id": "201",
+          "payroll_data": {
+            "status": "approved",
+            "approved_by": "8"
+          }
+        },
+        "output": {
+          "success": true,
+          "action": "update",
+          "payroll_id": "201",
+          "message": "Payroll record 201 updated successfully",
+          "payroll_data": {
+            "payroll_id": "201",
+            "employee_id": "12",
+            "pay_period_start": "2025-01-01",
+            "pay_period_end": "2025-01-31",
+            "hours_worked": 160.0,
+            "hourly_rate": 45.0,
+            "gross_pay": 7200.0,
+            "status": "approved",
+            "approved_by": "8",
+            "created_at": "2025-01-31T17:00:00",
+            "updated_at": "2025-01-20T11:30:00"
+          }
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "payroll_deduction",
+          "reference_id": "301",
+          "user_id": "8",
+          "field_name": "deduction_creation",
+          "old_value": null,
+          "new_value": "expense reimbursement deduction created"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "payroll_record",
+          "reference_id": "201",
+          "user_id": "8",
+          "field_name": "payroll_approval",
+          "old_value": "pending",
+          "new_value": "approved with deduction"
+        },
+        "output": {
+          "success": true,
+          "message": "Audit log created successfully"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+     
+      {
+        "from": "instruction",
+        "to": "discover_expense_entities",
+        "connection": {
+          "output": "entity_type, status",
+          "input": "entity_type, filters.status"
+        }
+      },
+      
+      {
+        "from": "discover_expense_entities",
+        "to": "manage_expense_reimbursements",
+        "connection": {
+          "output": "results[0].reimbursement_id",
+          "input": "reimbursement_id"
+        }
+      },
+       {
+        "from": "discover_user_employee_entities",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "filters.user_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_expense_reimbursements",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "reimbursement_data.approved_by"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_expense_reimbursements",
+        "connection": {
+          "output": "action, status, payment_date",
+          "input": "action, reimbursement_data.status, reimbursement_data.payment_date"
+        }
+      },
+      {
+        "from": "manage_expense_reimbursements",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "reimbursement_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "user_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "action, operation, reference_type, field_name, old_value, new_value",
+          "input": "action, operation, reference_type, field_name, old_value, new_value"
+        }
+      },
+     
+      {
+        "from": "discover_user_employee_entities",
+        "to": "discover_payroll_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "discover_payroll_entities",
+        "connection": {
+          "output": "entity_type, pay_period_end",
+          "input": "entity_type, filters.pay_period_end"
+        }
+      },
+      {
+        "from": "discover_payroll_entities",
+        "to": "manage_payroll_deduction",
+        "connection": {
+          "output": "results[0].payroll_id",
+          "input": "payroll_id"
+        }
+      },
+      {
+        "from": "manage_expense_reimbursements",
+        "to": "manage_payroll_deduction",
+        "connection": {
+          "output": "reimbursement_data.amount",
+          "input": "amount"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_payroll_deduction",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "created_by"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_payroll_deduction",
+        "connection": {
+          "output": "deduction_type",
+          "input": "deduction_type"
+        }
+      },
+      {
+        "from": "manage_payroll_deduction",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "deduction_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "discover_payroll_entities",
+        "to": "manage_payroll_record",
+        "connection": {
+          "output": "results[0].payroll_id",
+          "input": "payroll_id"
+        }
+      },
+      {
+        "from": "discover_user_employee_entities",
+        "to": "manage_payroll_record",
+        "connection": {
+          "output": "results[0].user_id",
+          "input": "payroll_data.approved_by"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "manage_payroll_record",
+        "connection": {
+          "output": "action, status",
+          "input": "action, payroll_data.status"
+        }
+      },
+      {
+        "from": "manage_payroll_record",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "payroll_id",
+          "input": "reference_id"
+        }
+      }
+    ],
+    "outputs": [
+      
+    ],
+    "num_edges": 20
+  }
+}
