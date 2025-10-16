@@ -240,7 +240,10 @@
           "operation": "create",
           "reference_type": "employee_benefits",
           "reference_id": "701",
-          "user_id": "6"
+          "user_id": "6",
+          "field_name": "benefits_enrollment",
+          "old_value": null,
+          "new_value": "family coverage enrolled"
         },
         "output": {
           "action": "create",
@@ -250,6 +253,48 @@
           "timestamp": "2025-10-01T12:00:00",
           "user_id": "6"
         }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "update",
+          "reference_type": "employee",
+          "reference_id": "4",
+          "user_id": "6",
+          "field_name": "benefits_status",
+          "old_value": "not_enrolled",
+          "new_value": "enrolled"
+        },
+        "output": {
+          "action": "create",
+          "log_id": "1261",
+          "reference_id": "4",
+          "reference_type": "employee",
+          "timestamp": "2025-10-01T12:15:00",
+          "user_id": "6"
+        }
+      },
+      {
+        "name": "manage_audit_logs",
+        "arguments": {
+          "action": "create",
+          "operation": "create",
+          "reference_type": "employee_training",
+          "reference_id": "801",
+          "user_id": "6",
+          "field_name": "training_enrollment",
+          "old_value": null,
+          "new_value": "workplace safety training enrolled"
+        },
+        "output": {
+          "action": "create",
+          "log_id": "1262",
+          "reference_id": "801",
+          "reference_type": "employee_training",
+          "timestamp": "2025-10-01T12:30:00",
+          "user_id": "6"
+        }
       }
     ],
     "edges": [
@@ -257,8 +302,24 @@
         "from": "instruction",
         "to": "discover_user_employee_entities",
         "connection": {
-          "output": "entity_type, employee_email",
+          "output": "entity_type, email",
           "input": "entity_type, filters.email"
+        }
+      },
+       {
+        "from": "discover_user_employee_entities",
+        "to": "discover_user_employee_entities",
+        "connection": {
+          "output": "entity_type, user_id",
+          "input": "entity_type, filters.user_id"
+        }
+      },
+       {
+        "from": "discover_user_employee_entities",
+        "to": "discover_benefits_entities",
+        "connection": {
+          "output": "results[0].employee_id",
+          "input": "filters.employee_id"
         }
       },
       {
@@ -269,14 +330,8 @@
           "input": "benefits_data.employee_id"
         }
       },
-      {
-        "from": "discover_user_employee_entities",
-        "to": "discover_benefits_entities",
-        "connection": {
-          "output": "results[0].employee_id",
-          "input": "filters.employee_id"
-        }
-      },
+     
+     
       {
         "from": "instruction",
         "to": "discover_benefits_entities",
@@ -286,19 +341,11 @@
         }
       },
       {
-        "from": "discover_user_employee_entities",
-        "to": "check_approval",
-        "connection": {
-          "output": "results[0].email",
-          "input": "requester_email"
-        }
-      },
-      {
         "from": "instruction",
         "to": "check_approval",
         "connection": {
-          "output": "action",
-          "input": "action"
+          "output": "requester_email, action",
+          "input": "requester_email, action"
         }
       },
       {
@@ -366,7 +413,7 @@
         }
       },
       {
-        "from": "manage_employee_training",
+        "from": "manage_employee_benefits",
         "to": "manage_audit_logs",
         "connection": {
           "output": "enrollment_id",
@@ -385,14 +432,30 @@
         "from": "instruction",
         "to": "manage_audit_logs",
         "connection": {
-          "output": "action, operation, reference_type",
-          "input": "action, operation, reference_type"
+          "output": "action, operation, reference_type, field_name, old_value, new_value",
+          "input": "action, operation, reference_type, field_name, old_value, new_value"
+        }
+      },
+      {
+        "from": "manage_employee",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "employee_data.employee_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "manage_employee_training",
+        "to": "manage_audit_logs",
+        "connection": {
+          "output": "enrollment_id",
+          "input": "reference_id"
         }
       }
     ],
     "outputs": [
         
     ],
-    "num_edges": 17
+    "num_edges": 19
   }
 }
